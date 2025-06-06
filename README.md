@@ -1,50 +1,69 @@
-# React + TypeScript + Vite
+# FuelFinder - Aplicación de Localización de Gasolineras
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## 📝 Descripción
+FuelFinder es una aplicación web desarrollada como proyecto para la asignatura de Tecnologías Emergentes de la Universidad Internacional de La Rioja (UNIR). Esta aplicación permite a los usuarios localizar las gasolineras más cercanas a su ubicación, comparar precios de diferentes combustibles y filtrar por marca y tipo de combustible.
 
-Currently, two official plugins are available:
+## 🚀 Características Principales
+- 📍 Geolocalización automática del usuario
+- 🗺️ Visualización de gasolineras en un mapa interactivo
+- 🔍 Filtrado por marca y tipo de combustible
+- 💰 Visualización de precios actualizados
+- 📱 Diseño responsive y moderno
+- ⚡ Interfaz de usuario intuitiva con feedback visual
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 🛠️ Tecnologías Utilizadas
+- **Frontend:**
+  - React 18
+  - TypeScript
+  - Vite
+  - Leaflet (para mapas interactivos)
+  - shadcn/ui (componentes de UI modernos)
+  - Tailwind CSS (estilos)
 
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
-
-- Configure the top-level `parserOptions` property like this:
-
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+## 🏗️ Estructura del Proyecto
+```
+src/
+├── components/         # Componentes React
+├── services/          # Servicios y APIs
+├── types/            # Definiciones de tipos TypeScript
+└── App.tsx           # Componente principal
 ```
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+## 🚀 Instalación y Ejecución
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
-
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
+1. Clonar el repositorio:
+```bash
+git clone [https://github.com/davechbga/gasolineras-api-TE]
 ```
+
+2. Instalar dependencias:
+```bash
+npm install
+```
+
+3. Ejecutar en modo desarrollo:
+```bash
+npm run dev
+```
+
+4. Construir para producción:
+```bash
+npm run build
+```
+
+## 📚 Aprendizajes y Objetivos
+Este proyecto fue desarrollado como parte de la asignatura de Tecnologías Emergentes de la UNIR, con los siguientes objetivos de aprendizaje:
+- Implementación de aplicaciones web modernas con React
+- Uso de TypeScript para desarrollo seguro y mantenible
+- Integración de APIs y servicios externos
+- Implementación de interfaces de usuario modernas y responsivas
+- Manejo de estados y efectos en React
+- Integración de mapas interactivos
+- Implementación de filtros y búsquedas en tiempo real
+
+## 👨‍💻 Autor
+David Chiriboga - Estudiante de la UNIR
+
+## 📄 Licencia
+Este proyecto es parte de una asignatura académica de la Universidad Internacional de La Rioja (UNIR).
+
