@@ -208,6 +208,7 @@ const App = () => {
   // Cargar estaciones iniciales
   useEffect(() => {
     loadStations(center);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // Manejo de clics en el mapa

@@ -11,6 +11,7 @@ import {
 } from "@/components/ui/pagination";
 import { useState } from "react";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import { Button } from "@/components/ui/button";
 
 interface GasStationListProps {
   stations: GasStation[];
@@ -130,19 +131,29 @@ export const GasStationList = ({ stations }: GasStationListProps) => {
       <Pagination>
         <PaginationContent>
           <PaginationItem>
-            <PaginationPrevious
+            <Button
+              variant="ghost"
+              size="icon"
               onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
               disabled={currentPage === 1}
-            />
+              className="h-9 w-9"
+            >
+              <PaginationPrevious className="h-4 w-4" />
+            </Button>
           </PaginationItem>
           
           {renderPaginationItems()}
           
           <PaginationItem>
-            <PaginationNext
+            <Button
+              variant="ghost"
+              size="icon"
               onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
               disabled={currentPage === totalPages}
-            />
+              className="h-9 w-9"
+            >
+              <PaginationNext className="h-4 w-4" />
+            </Button>
           </PaginationItem>
         </PaginationContent>
       </Pagination>
