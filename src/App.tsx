@@ -11,6 +11,9 @@ import { GasStation, FuelTypes } from "./types";
 import { GasStationList } from "./components/GasStationList";
 import { GasStationFilter } from "./components/GasStationFilter";
 import { GasTypeFilter } from "./components/GasTypeFilter";
+import { AutonomousCommunityFilter } from "./components/AutonomousCommunityFilter";
+import { ProvinceFilter } from "./components/ProvinceFilter";
+import { DateFilter } from "./components/DateFilter";
 import { getClosestStations } from "./services/api";
 import "leaflet/dist/leaflet.css";
 
@@ -117,10 +120,14 @@ const MapInstructions = () => {
 };
 
 const App = () => {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [stations, setStations] = useState<GasStation[]>([]);
   const [filteredStations, setFilteredStations] = useState<GasStation[]>([]);
   const [brand, setBrand] = useState<string>("");
   const [fuelType, setFuelType] = useState<FuelTypes | "">("");
+  const [autonomousCommunity, setAutonomousCommunity] = useState<string>("");
+  const [province, setProvince] = useState<string>("");
+  const [date, setDate] = useState<string>("");
   const [center, setCenter] = useState<[number, number]>([40.416775, -3.70379]);
   const [latInput, setLatInput] = useState<string>("");
   const [lngInput, setLngInput] = useState<string>("");
@@ -146,7 +153,13 @@ const App = () => {
         });
       }, 200);
 
-      const closestStations = await getClosestStations(newCenter);
+      const closestStations = await getClosestStations(newCenter, 20, {
+        brand,
+        fuelType: fuelType || undefined,
+        autonomousCommunity,
+        province,
+        date,
+      });
       setStations(closestStations);
       setFilteredStations(closestStations);
 
@@ -168,48 +181,11 @@ const App = () => {
     }
   };
 
-  // Aplicar filtros
-  useEffect(() => {
-    const applyFilters = () => {
-      const filtered = stations.filter((station) => {
-        const matchesBrand = brand
-          ? station.Rótulo.toLowerCase().includes(brand.toLowerCase())
-          : true;
-
-        const matchesFuel = fuelType
-          ? station[fuelType] !== undefined && 
-            station[fuelType] !== null && 
-            station[fuelType] !== "" &&
-            parseFloat(String(station[fuelType]).replace(",", ".")) > 0
-          : true;
-
-        return matchesBrand && matchesFuel;
-      });
-      setFilteredStations(filtered);
-
-      // Mostrar mensaje si no hay resultados
-      if (filtered.length === 0 && stations.length > 0) {
-        setError(
-          "No se encontraron gasolineras con los filtros seleccionados."
-        );
-      } else {
-        setError(null);
-      }
-    };
-
-    applyFilters();
-  }, [brand, fuelType, stations]);
-
-  // Cargar estaciones cuando cambie el centro
-  useEffect(() => {
-    loadStations(center);
-  }, [center]);
-
-  // Cargar estaciones iniciales
+  // Cargar estaciones cuando cambie el centro o los filtros
   useEffect(() => {
     loadStations(center);
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [center, brand, fuelType, autonomousCommunity, province, date]);
 
   // Manejo de clics en el mapa
   const MapClickHandler = () => {
@@ -270,6 +246,20 @@ const App = () => {
                     </div>
                     <div className="space-y-2">
                       <GasTypeFilter onGasTypeChange={setFuelType} />
+                    </div>
+                    <div className="space-y-2">
+                      <AutonomousCommunityFilter
+                        onAutonomousCommunityChange={setAutonomousCommunity}
+                      />
+                    </div>
+                    <div className="space-y-2">
+                      <ProvinceFilter
+                        onProvinceChange={setProvince}
+                        selectedAutonomousCommunity={autonomousCommunity}
+                      />
+                    </div>
+                    <div className="space-y-2">
+                      <DateFilter onDateChange={setDate} />
                     </div>
                   </>
                 )}

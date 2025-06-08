@@ -1,4 +1,4 @@
-import { GasStationResponse, GasStation, FilterOptions, AutonomousCommunity, Province } from "@/types";
+import { GasStationResponse, GasStation, FuelTypes, FilterOptions } from "@/types";
 
 export const getClosestStations = async (
   center: [number, number],
@@ -74,63 +74,4 @@ const haversineDistance = (
 
   const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
   return R * c; // Distancia en km
-};
-
-// Obtener todas las comunidades autónomas
-export const getAutonomousCommunities = async (): Promise<AutonomousCommunity[]> => {
-  try {
-    const response = await fetch(
-      "https://sedeaplicaciones.minetur.gob.es/ServiciosRESTCarburantes/PreciosCarburantes/EstacionesTerrestres/"
-    );
-    const data: GasStationResponse = await response.json();
-
-    // Extraer comunidades autónomas únicas
-    const communities = new Map<string, string>();
-    data.ListaEESSPrecio.forEach((station) => {
-      if (!communities.has(station.IDCCAA)) {
-        communities.set(station.IDCCAA, station.Provincia.split(" - ")[0]);
-      }
-    });
-
-    return Array.from(communities.entries()).map(([id, name]) => ({
-      id,
-      name,
-      code: id,
-    }));
-  } catch (error) {
-    console.error("Error fetching autonomous communities:", error);
-    throw error;
-  }
-};
-
-// Obtener todas las provincias
-export const getProvinces = async (): Promise<Province[]> => {
-  try {
-    const response = await fetch(
-      "https://sedeaplicaciones.minetur.gob.es/ServiciosRESTCarburantes/PreciosCarburantes/EstacionesTerrestres/"
-    );
-    const data: GasStationResponse = await response.json();
-
-    // Extraer provincias únicas
-    const provinces = new Map<string, { name: string; autonomousCommunityId: string }>();
-    data.ListaEESSPrecio.forEach((station) => {
-      if (!provinces.has(station.IDProvincia)) {
-        provinces.set(station.IDProvincia, {
-          name: station.Provincia,
-          autonomousCommunityId: station.IDCCAA,
-        });
-      }
-    });
-
-    return Array.from(provinces.entries()).map(([id, { name, autonomousCommunityId }]) => ({
-      id,
-      name,
-      autonomousCommunityId,
-      code: id,
-      autonomousCommunityCode: autonomousCommunityId,
-    }));
-  } catch (error) {
-    console.error("Error fetching provinces:", error);
-    throw error;
-  }
-};
+}; 
