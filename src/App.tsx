@@ -120,8 +120,6 @@ const MapInstructions = () => {
 };
 
 const App = () => {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [stations, setStations] = useState<GasStation[]>([]);
   const [filteredStations, setFilteredStations] = useState<GasStation[]>([]);
   const [brand, setBrand] = useState<string>("");
   const [fuelType, setFuelType] = useState<FuelTypes | "">("");
@@ -160,7 +158,6 @@ const App = () => {
         province,
         date,
       });
-      setStations(closestStations);
       setFilteredStations(closestStations);
 
       // Completar la barra de progreso

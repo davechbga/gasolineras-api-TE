@@ -1,4 +1,4 @@
-import { GasStationResponse, GasStation, FuelTypes, FilterOptions } from "@/types";
+import { GasStationResponse, GasStation, FilterOptions } from "@/types";
 
 export const getClosestStations = async (
   center: [number, number],
